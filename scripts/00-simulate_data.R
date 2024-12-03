@@ -1,52 +1,49 @@
+```r
 #### Preamble ####
-# Purpose: Simulates a dataset of Australian electoral divisions, including the 
-  #state and party that won each division.
-# Author: Rohan Alexander
-# Date: 26 September 2024
-# Contact: rohan.alexander@utoronto.ca
+# Purpose: Simulate a dataset of Canadian grocery store products, including vendor,
+#          product details, and pricing information for analysis and testing.
+# Author: Duanyi Su
+# Date: 3 December 2024
+# Contact: duanyi.su@mail.utoronto.ca
 # License: MIT
-# Pre-requisites: The `tidyverse` package must be installed
-# Any other information needed? Make sure you are in the `starter_folder` rproj
-
+# Pre-requisites: 
+#   - The `tidyverse` package must be installed.
+#   - Ensure that you are in the appropriate project directory.
+#   - The "data/00-simulated_data" directory exists to save the dataset.
 
 #### Workspace setup ####
 library(tidyverse)
-set.seed(853)
-
+set.seed(123)
 
 #### Simulate data ####
-# State names
-states <- c(
-  "New South Wales",
-  "Victoria",
-  "Queensland",
-  "South Australia",
-  "Western Australia",
-  "Tasmania",
-  "Northern Territory",
-  "Australian Capital Territory"
+# Number of rows to simulate
+n <- 200
+
+# Simulation
+simulated_data <- tibble(
+  vendor = sample(c("Walmart", "T&T"), n, replace = TRUE),
+  product_id = sample(1000:9999, n, replace = TRUE),
+  product_name = sample(c("beef steak", "beef ribs", "beef brisket", "beef shank"), n, replace = TRUE),
+  brand = sample(c("BrandA", "BrandB", "BrandC", "BrandD"), n, replace = TRUE),
+  current_price = round(runif(n, 5, 50), 2),
+  old_price = ifelse(runif(n) > 0.3, round(runif(n, 5, 50), 2), NA),
+  units = sample(1:10, n, replace = TRUE),
+  price_per_unit = current_price / units,
+  year = sample(2021:2024, n, replace = TRUE),
+  month = sample(1:12, n, replace = TRUE),
+  day = sample(1:28, n, replace = TRUE)
 )
 
-# Political parties
-parties <- c("Labor", "Liberal", "Greens", "National", "Other")
-
-# Create a dataset by randomly assigning states and parties to divisions
-analysis_data <- tibble(
-  division = paste("Division", 1:151),  # Add "Division" to make it a character
-  state = sample(
-    states,
-    size = 151,
-    replace = TRUE,
-    prob = c(0.25, 0.25, 0.15, 0.1, 0.1, 0.1, 0.025, 0.025) # Rough state population distribution
-  ),
-  party = sample(
-    parties,
-    size = 151,
-    replace = TRUE,
-    prob = c(0.40, 0.40, 0.05, 0.1, 0.05) # Rough party distribution
-  )
-)
-
+# Replace NA values in old_price with current_price
+simulated_data <- simulated_data %>%
+  mutate(old_price = ifelse(is.na(old_price), current_price, old_price))
 
 #### Save data ####
-write_csv(analysis_data, "data/00-simulated_data/simulated_data.csv")
+# Create the directory if it doesn't exist
+if (!dir.exists("data/00-simulated_data")) {
+  dir.create("data/00-simulated_data", recursive = TRUE)
+}
+
+# Save the dataset as a CSV file
+write_csv(simulated_data, "data/00-simulated_data/simulate_beef_data.csv")
+```
