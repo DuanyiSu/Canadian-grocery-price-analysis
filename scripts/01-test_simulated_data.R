@@ -1,89 +1,112 @@
+```r
 #### Preamble ####
-# Purpose: Tests the structure and validity of the simulated Australian 
-  #electoral divisions dataset.
-# Author: Rohan Alexander
-# Date: 26 September 2024
-# Contact: rohan.alexander@utoronto.ca
+# Purpose: To validate the structure and consistency of the simulated Canadian grocery dataset,
+#          ensuring accurate data loading, logical constraints, and adherence to expected values.
+# Author: Duanyi Su
+# Date: 3 December 2024
+# Contact: duanyi.su@mail.utoronto.ca
 # License: MIT
 # Pre-requisites: 
-  # - The `tidyverse` package must be installed and loaded
-  # - 00-simulate_data.R must have been run
-# Any other information needed? Make sure you are in the `starter_folder` rproj
-
+#   - The `tidyverse` package must be installed and loaded.
+#   - Ensure 00-simulate_data.R has been run to generate the dataset.
+#   - Verify you are in the appropriate project directory.
 
 #### Workspace setup ####
 library(tidyverse)
 
-analysis_data <- read_csv("data/00-simulated_data/simulated_data.csv")
+# Load the simulated dataset
+file_path <- "data/00-simulated_data/simulate_beef_data.csv"
 
-# Test if the data was successfully loaded
-if (exists("analysis_data")) {
+if (file.exists(file_path)) {
+  simulate_data <- read_csv(file_path)
   message("Test Passed: The dataset was successfully loaded.")
 } else {
-  stop("Test Failed: The dataset could not be loaded.")
+  stop("Test Failed: The file 'simulate_beef_data.csv' does not exist. Ensure 00-simulate_data.R has been run.")
 }
-
 
 #### Test data ####
 
-# Check if the dataset has 151 rows
-if (nrow(analysis_data) == 151) {
-  message("Test Passed: The dataset has 151 rows.")
+# Check if the dataset has 200 rows
+if (nrow(simulate_data) == 200) {
+  message("Test Passed: The dataset has 200 rows.")
 } else {
-  stop("Test Failed: The dataset does not have 151 rows.")
+  stop("Test Failed: The dataset does not have 200 rows.")
 }
 
-# Check if the dataset has 3 columns
-if (ncol(analysis_data) == 3) {
-  message("Test Passed: The dataset has 3 columns.")
+# Check if the dataset has 11 columns
+if (ncol(simulate_data) == 11) {
+  message("Test Passed: The dataset has 11 columns.")
 } else {
-  stop("Test Failed: The dataset does not have 3 columns.")
+  stop("Test Failed: The dataset does not have 11 columns.")
 }
 
-# Check if all values in the 'division' column are unique
-if (n_distinct(analysis_data$division) == nrow(analysis_data)) {
-  message("Test Passed: All values in 'division' are unique.")
+# Check if all values in the 'product_id' column are unique
+if (n_distinct(simulate_data$product_id) == nrow(simulate_data)) {
+  message("Test Passed: All values in 'product_id' are unique.")
 } else {
-  stop("Test Failed: The 'division' column contains duplicate values.")
+  stop("Test Failed: The 'product_id' column contains duplicate values.")
 }
 
-# Check if the 'state' column contains only valid Australian state names
-valid_states <- c("New South Wales", "Victoria", "Queensland", "South Australia", 
-                  "Western Australia", "Tasmania", "Northern Territory", 
-                  "Australian Capital Territory")
+# Check if the 'vendor' column contains only valid vendor names
+valid_vendors <- c("Walmart", "T&T")
 
-if (all(analysis_data$state %in% valid_states)) {
-  message("Test Passed: The 'state' column contains only valid Australian state names.")
+if (all(simulate_data$vendor %in% valid_vendors)) {
+  message("Test Passed: The 'vendor' column contains only valid vendor names.")
 } else {
-  stop("Test Failed: The 'state' column contains invalid state names.")
+  stop("Test Failed: The 'vendor' column contains invalid vendor names.")
 }
 
-# Check if the 'party' column contains only valid party names
-valid_parties <- c("Labor", "Liberal", "Greens", "National", "Other")
-
-if (all(analysis_data$party %in% valid_parties)) {
-  message("Test Passed: The 'party' column contains only valid party names.")
+# Check if all product names contain "beef"
+if (all(str_detect(tolower(simulate_data$product_name), "beef"))) {
+  message("Test Passed: All product names contain 'beef'.")
 } else {
-  stop("Test Failed: The 'party' column contains invalid party names.")
+  stop("Test Failed: Some product names do not contain 'beef'.")
 }
 
-# Check if there are any missing values in the dataset
-if (all(!is.na(analysis_data))) {
+# Check if all date columns contain valid values
+if (all(simulate_data$year >= 2021 & simulate_data$year <= 2024)) {
+  message("Test Passed: The 'year' column contains valid values.")
+} else {
+  stop("Test Failed: The 'year' column contains invalid values.")
+}
+
+if (all(simulate_data$month >= 1 & simulate_data$month <= 12)) {
+  message("Test Passed: The 'month' column contains valid values.")
+} else {
+  stop("Test Failed: The 'month' column contains invalid values.")
+}
+
+if (all(simulate_data$day >= 1 & simulate_data$day <= 28)) {
+  message("Test Passed: The 'day' column contains valid values.")
+} else {
+  stop("Test Failed: The 'day' column contains invalid values.")
+}
+
+# Check for missing values in the dataset
+if (all(!is.na(simulate_data))) {
   message("Test Passed: The dataset contains no missing values.")
 } else {
   stop("Test Failed: The dataset contains missing values.")
 }
 
-# Check if there are no empty strings in 'division', 'state', and 'party' columns
-if (all(analysis_data$division != "" & analysis_data$state != "" & analysis_data$party != "")) {
-  message("Test Passed: There are no empty strings in 'division', 'state', or 'party'.")
+# Check that `price_per_unit` is correctly calculated
+if (all(simulate_data$price_per_unit == simulate_data$current_price / simulate_data$units)) {
+  message("Test Passed: The 'price_per_unit' column is correctly calculated.")
 } else {
-  stop("Test Failed: There are empty strings in one or more columns.")
+  stop("Test Failed: The 'price_per_unit' column is not correctly calculated.")
 }
 
-# Check if the 'party' column has at least two unique values
-if (n_distinct(analysis_data$party) >= 2) {
-  message("Test Passed: The 'party' column contains at least two unique values.")
+# Check that `current_price` and `old_price` have no negative values
+if (all(simulate_data$current_price >= 0 & simulate_data$old_price >= 0)) {
+  message("Test Passed: The 'current_price' and 'old_price' columns have no negative values.")
 } else {
-  stop("Test Failed: The 'party' column contains less than two unique values.")
+  stop("Test Failed: The 'current_price' or 'old_price' column contains negative values.")
 }
+
+# Check if the 'brand' column contains at least two unique brands
+if (n_distinct(simulate_data$brand) >= 2) {
+  message("Test Passed: The 'brand' column contains at least two unique brands.")
+} else {
+  stop("Test Failed: The 'brand' column contains less than two unique brands.")
+}
+```
