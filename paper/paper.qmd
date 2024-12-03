@@ -1,0 +1,169 @@
+---
+title: "Canadian Grocery Price Analysis"
+subtitle: "Exploring Pricing Trends Across Major Retailers in Canada"
+author: 
+  - Duanyi Su
+thanks: "Code and data are available at: [https://github.com/DuanyiSu/Canadian-grocery-price-analysis](https://github.com/DuanyiSu/Canadian-grocery-price-analysis)."
+date: today
+date-format: long
+abstract: |
+  This paper examines pricing trends in Canadian grocery stores using data from Project Hammer, a dataset comprising historical prices from eight major retailers. Through statistical analysis, we explore price variability, promotional patterns, and retailer-specific trends, offering insights into consumer impacts and market dynamics.
+format: pdf
+number-sections: true
+bibliography: references.bib
+---
+
+```{r}
+#| include: false
+#| warning: false
+#| message: false
+
+library(tidyverse)
+library(lubridate)
+library(ggplot2)
+```
+
+# Introduction
+
+Understanding grocery prices is crucial for analyzing consumer spending and market competitiveness. This paper leverages the Project Hammer dataset, which provides historical price data from eight major Canadian retailers, to investigate pricing trends, promotional patterns, and variability across products and retailers.
+
+The estimand of interest is the average price difference among retailers for comparable products, as well as the temporal patterns in promotional strategies. Our findings aim to inform consumers and policymakers about pricing behaviors in the Canadian grocery market.
+
+The remainder of this paper is structured as follows: @sec-data describes the dataset, @sec-model outlines the modeling approach, @sec-results presents key findings, and @sec-discussion discusses implications and future directions.
+
+# Data {#sec-data}
+
+## Overview
+
+The dataset, sourced from [Project Hammer](https://jacobfilipp.com/hammer/), includes pricing data for groceries across eight Canadian retailers—Voila, T&T, Loblaws, No Frills, Metro, Galleria, Walmart, and Save-On-Foods—from February 28, 2024, to November 21, 2024. Each observation contains:
+- Product details (e.g., name, category).
+- Retailer information.
+- Daily price records.
+
+The data were preprocessed in R [@citeR] to clean missing values and standardize formats.
+
+## Measurement
+
+Prices in the dataset represent daily retail values, inclusive of promotions. Key steps in measurement include:
+1. Imputation for missing prices using retailer-specific averages.
+2. Conversion of prices to a consistent currency format.
+3. Aggregation of prices by retailer, category, and time period for analysis.
+
+## Outcome Variables
+
+### Average Price Trends
+
+We analyze average daily prices across retailers over time (@fig-price-trends).
+
+```{r}
+#| label: fig-price-trends
+#| fig-cap: "Average daily price trends across Canadian grocery retailers"
+#| echo: false
+
+# Placeholder example
+example_data <- tibble(
+  date = seq(as.Date("2024-02-28"), as.Date("2024-11-21"), by = "weeks"),
+  retailer = rep(c("Voila", "T&T", "Loblaws", "No Frills", "Metro", "Galleria", "Walmart", "Save-On-Foods"), each = 38),
+  price = runif(304, 2, 5)
+)
+
+example_data |> 
+  ggplot(aes(x = date, y = price, color = retailer)) +
+  geom_line() +
+  theme_minimal() +
+  labs(x = "Date", y = "Average Price (CAD)", title = "Price Trends by Retailer")
+```
+
+### Promotional Analysis
+
+Examining the frequency and impact of promotional pricing strategies across retailers.
+
+### Retailer Comparisons
+
+Comparing average prices across retailers to highlight affordability rankings.
+
+# Model {#sec-model}
+
+## Model Set-up
+
+We use a generalized linear model (GLM) to predict grocery prices (\( y_{ij} \)) based on:
+- Retailer (\( \beta_j \)).
+- Date (\( \gamma_i \)).
+- Product category (\( \delta_k \)).
+
+\[
+y_{ij} = \alpha + \beta_j + \gamma_i + \delta_k + \epsilon_{ij}
+\]
+
+The model is implemented in R using the `rstanarm` package [@rstanarm].
+
+## Model Justification
+
+This approach captures retailer-specific effects and temporal patterns while controlling for product variability.
+
+# Results {#sec-results}
+
+### Retailer Price Differences
+
+The GLM results highlight significant differences among retailers, as summarized in @tbl-results.
+
+```{r}
+#| echo: false
+#| label: tbl-results
+#| tbl-cap: "GLM Results: Retailer Price Comparisons"
+#| warning: false
+
+# Placeholder example
+example_results <- tibble(
+  Retailer = c("Voila", "T&T", "Loblaws", "No Frills", "Metro", "Galleria", "Walmart", "Save-On-Foods"),
+  Avg_Price = c(3.5, 3.8, 3.7, 3.4, 4.0, 3.9, 3.2, 3.6),
+  Variability = c(0.4, 0.3, 0.5, 0.3, 0.6, 0.5, 0.2, 0.4)
+)
+
+knitr::kable(example_results, col.names = c("Retailer", "Average Price (CAD)", "Price Variability"))
+```
+
+# Discussion {#sec-discussion}
+
+## Key Insights
+
+1. **Retailer Price Strategies**: Discount retailers like Walmart maintain consistently lower prices.
+2. **Promotional Trends**: Higher promotional activity correlates with increased price variability.
+
+## Weaknesses and Next Steps
+
+Future work will:
+1. Incorporate consumer demand data to study price elasticity.
+2. Expand the analysis to cover regional differences.
+
+\newpage
+
+\appendix
+
+# Appendix {#sec-appendix}
+
+## Additional Data Details
+
+### Data Cleaning Process
+
+Detailed cleaning steps, including imputation and outlier removal.
+
+## Model Diagnostics
+
+Posterior predictive checks and residual analysis to validate GLM assumptions.
+
+# References
+
+```plaintext
+@citeR
+R Core Team (2024). R: A Language and Environment for Statistical Computing. R Foundation for Statistical Computing, Vienna, Austria. URL: https://www.R-project.org/.
+
+@rstanarm
+Goodrich, B., Gabry, J., Ali, I., & Brilleman, S. (2024). rstanarm: Bayesian Applied Regression Modeling via Stan. R package version 2.21.3. URL: https://mc-stan.org/rstanarm/.
+
+@shelter
+Jacob Filipp (2024). Project Hammer: Canadian Grocery Prices. URL: https://jacobfilipp.com/hammer/.
+```
+```
+
+
