@@ -1,40 +1,26 @@
+# General files
 **/.DS_Store
-.Rproj.user
-.Rhistory
-.Rdata
-.httr-oauth
 .DS_Store
-
-# History files
-.Rhistory
-.Rapp.history
-
-# Session Data files
-.RData
-
-# User-specific files
-.Ruserdata
-
-# Example code in package build process
-*-Ex.R
-
-# Output files from R CMD build
-/*.tar.gz
-
-# Output files from R CMD check
-/*.Rcheck/
 
 # RStudio files
 .Rproj.user/
+.Rhistory
+.Rdata
+.Rapp.history
+.Ruserdata
 
-# produced vignettes
-vignettes/*.html
-vignettes/*.pdf
+# Temporary R files
+.RData
+*.Rhistory
+*.Rapp.history
+*.Ruserdata
 
-# OAuth2 token, see https://github.com/hadley/httr/releases/tag/v0.3
-.httr-oauth
+# Package build files
+*-Ex.R
+/*.tar.gz
+/*.Rcheck/
 
-# knitr and R markdown default cache directories
+# Cache directories for knitr and R markdown
 *_cache/
 /cache/
 
@@ -42,5 +28,23 @@ vignettes/*.pdf
 *.utf8.md
 *.knit.md
 
-# R Environment Variables
+# Produced vignettes
+vignettes/*.html
+vignettes/*.pdf
+
+# OAuth2 token
+.httr-oauth
+
+# Environment variables
 .Renviron
+
+# Quarto files
+.quarto/
+
+# Parquet files (adjust as needed)
+*.parquet
+
+# Logs and temporary files
+logs/
+*.log
+*.tmp
