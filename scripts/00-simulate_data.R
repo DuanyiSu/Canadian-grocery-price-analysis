@@ -1,4 +1,3 @@
-```r
 #### Preamble ####
 # Purpose: Simulate a dataset of Canadian grocery store products, including vendor,
 #          product details, and pricing information for analysis and testing.
@@ -46,4 +45,3 @@ if (!dir.exists("data/00-simulated_data")) {
 
 # Save the dataset as a CSV file
 write_csv(simulated_data, "data/00-simulated_data/simulate_beef_data.csv")
-```
