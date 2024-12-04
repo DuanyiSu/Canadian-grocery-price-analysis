@@ -1,4 +1,3 @@
-```r
 #### Preamble ####
 # Purpose: To validate the integrity of the cleaned beef dataset by performing tests for data loading, logical consistency, adherence to constraints, and correct calculations.
 # Author: Duanyi Su
@@ -82,4 +81,3 @@ test_that("Unique values in key columns", {
   
   expect_true(all(beef_data$price_per_unit >= 0), label = "price_per_unit should not contain negative values.")
 })
-```
