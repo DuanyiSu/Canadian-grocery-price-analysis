@@ -1,5 +1,5 @@
 #### Preamble ####
-# Purpose: Simulate a dataset of Canadian grocery store products, including vendor,
+# Purpose: Simulate and save a dataset of Canadian grocery store products, including vendor,
 #          product details, and pricing information for analysis and testing.
 # Author: Duanyi Su
 # Date: 3 December 2024
@@ -8,7 +8,8 @@
 # Pre-requisites: 
 #   - The `tidyverse` package must be installed.
 #   - Ensure that you are in the appropriate project directory.
-#   - The "data/00-simulated_data" directory exists to save the dataset.
+#   - The directory structure matches your project organization.
+#   - Output files will be stored in `simulate_data.csv` and referenced `ppu_data.parquet`.
 
 #### Workspace setup ####
 library(tidyverse)
@@ -38,10 +39,9 @@ simulated_data <- simulated_data %>%
   mutate(old_price = ifelse(is.na(old_price), current_price, old_price))
 
 #### Save data ####
-# Create the directory if it doesn't exist
-if (!dir.exists("data/00-simulated_data")) {
-  dir.create("data/00-simulated_data", recursive = TRUE)
-}
-
 # Save the dataset as a CSV file
-write_csv(simulated_data, "data/00-simulated_data/simulate_beef_data.csv")
+write_csv(simulated_data, "simulate_data.csv")
+
+# Save the dataset as a parquet file (for ppu_data.parquet)
+library(arrow)
+write_parquet(simulated_data, "ppu_data.parquet")
