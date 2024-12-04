@@ -1,4 +1,3 @@
-```r
 #### Preamble ####
 # Purpose: To replicate and visualize graphs from the analysis of plane data using the cleaned dataset.
 # Author: Duanyi Su
@@ -17,4 +16,3 @@ library(tidyverse)
 #### Load data ####
 # Load the cleaned data for analysis and visualization
 cleaned_data <- read_csv("data/analysis_data/analysis_data.csv")
-```
