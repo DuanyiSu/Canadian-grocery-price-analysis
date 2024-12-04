@@ -1,19 +1,20 @@
+```r
 #### Preamble ####
-# Purpose: Replicated graphs from... [...UPDATE THIS...]
-# Author: Rohan Alexander [...UPDATE THIS...]
-# Date: 11 February 2023 [...UPDATE THIS...]
-# Contact: rohan.alexander@utoronto.ca [...UPDATE THIS...]
+# Purpose: To replicate and visualize graphs from the analysis of plane data using the cleaned dataset.
+# Author: Duanyi Su
+# Date: 3 December 2024
+# Contact: duanyi.su@mail.utoronto.ca
 # License: MIT
-# Pre-requisites: [...UPDATE THIS...]
-# Any other information needed? [...UPDATE THIS...]
-
+# Pre-requisites: 
+  # - The `tidyverse` package must be installed.
+  # - The cleaned dataset must be available in the specified path.
+# Any other information needed? Ensure all paths and dependencies are correctly configured.
 
 #### Workspace setup ####
+# Load required libraries
 library(tidyverse)
-# [...UPDATE THIS...]
 
 #### Load data ####
-# [...ADD CODE HERE...]
-
-
-
+# Load the cleaned data for analysis and visualization
+cleaned_data <- read_csv("data/analysis_data/analysis_data.csv")
+```
