@@ -1,22 +1,23 @@
 #### Preamble ####
-# Purpose: To download and save data from an online source for further analysis.
+# Purpose: Download and save data from an online source for further analysis.
 # Author: Duanyi Su
 # Date: 3 December 2024
 # Contact: duanyi.su@mail.utoronto.ca
 # License: MIT
 # Pre-requisites: 
-#   - Ensure the required packages (`httr`, `here`, `utils`) are installed.
-#   - You are in the correct working directory with necessary subfolders created.
+#   - Ensure the required packages (`httr`, `here`, `utils`, `readr`) are installed.
+#   - Verify you are in the correct working directory with necessary subfolders created.
 
 #### Workspace setup ####
 # Load required libraries
 library(httr)
 library(here)
 library(utils)
+library(readr)
 
 #### Download data ####
 # Define the URL for the zip file
-url <- "https://jacobfilipp.com/hammerdata/hammer-5-csv.zip"
+url <- "https://jacobfilipp.com/hammer/hammer-5-csv.zip"
 
 # Define the local file path to save the downloaded zip file
 zip_file <- here("data", "01-raw_data", "raw_data.zip")
@@ -41,12 +42,14 @@ if (status_code(response) == 200) {
   message("Extracted files:")
   print(extracted_files)
   
-  # Optional: Load and preview the first CSV file
-  csv_file <- extracted_files[grep("\\.csv$", extracted_files)][1] # First CSV file
-  if (!is.na(csv_file)) {
-    dataset <- read.csv(csv_file)
-    message("Preview of the first CSV file:")
-    print(head(dataset))
+  # Load and preview the first CSV file
+  csv_files <- extracted_files[grep("\\.csv$", extracted_files)]
+  if (length(csv_files) > 0) {
+    for (csv_file in csv_files) {
+      dataset <- read_csv(csv_file)
+      message("Preview of the CSV file: ", csv_file)
+      print(head(dataset))
+    }
   } else {
     message("No CSV files found in the extracted folder.")
   }
