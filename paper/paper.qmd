@@ -406,10 +406,10 @@ The following transformations were applied to prepare the dataset for analysis:
 - **Variable creation**:
   - Derived variables included `price_difference` (old price minus current price) and `month` (from timestamps).
 
-@tbl-cleaned_data showcases the cleaned dataset.
+@tbl-cleaned_data_summary showcases the cleaned dataset.
 
 ```{r}
-#| label: tbl-cleaned_data
+#| label: tbl-cleaned_data_summary
 #| tbl-cap: "Summary of Cleaned Dataset"
 #| echo: false
 
@@ -527,25 +527,6 @@ The survey includes a mix of closed-ended and open-ended questions:
 
 ### Linkages to Literature
 The survey methodology is grounded in consumer behavior theories and market segmentation studies. Stratified sampling ensures that diverse consumer behaviors are captured, while the focus on cultural preferences aligns with studies on niche markets and brand loyalty.
-
-# Data Details {#sec-data_details}
-
-## Cleaning and Processing
-
-The dataset was cleaned to focus on items with complete pricing and promotional information. Additional transformations included converting prices to numeric format and standardizing product categories.
-
-```{r}
-#| label: tbl-cleaned_data
-#| tbl-cap: "Cleaned data for grocery price analysis"
-#| echo: false
-
-merged_data %>%
-  head(10) %>%
-  kable(
-    col.names = c("Retailer", "Current Price", "Old Price", "Promotion", "Product Type"),
-    booktabs = TRUE
-  )
-```
 
 # References
 ```
