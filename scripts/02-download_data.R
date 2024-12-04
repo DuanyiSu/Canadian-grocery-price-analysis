@@ -1,4 +1,3 @@
-```r
 #### Preamble ####
 # Purpose: To download and save data from an online source for further analysis.
 # Author: Duanyi Su
@@ -55,4 +54,3 @@ if (status_code(response) == 200) {
 } else {
   stop("Failed to download the data. HTTP status code: ", status_code(response))
 }
-```
