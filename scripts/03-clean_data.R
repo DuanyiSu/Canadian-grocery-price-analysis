@@ -68,3 +68,8 @@ cleaned_data <- merge_data %>%
 # Create output directory if it doesn't exist
 output_dir <- here("data", "02-analysis_data")
 dir.create(output_dir, recursive = TRUE, showWarnings = FALSE)
+
+# Save the datasets in parquet format for efficient storage and analysis
+write_parquet(merge_data, file.path(output_dir, "merged_data.parquet"))
+write_parquet(ppu_data, file.path(output_dir, "ppu_data.parquet"))
+write_parquet(cleaned_data, file.path(output_dir, "data.parquet"))
