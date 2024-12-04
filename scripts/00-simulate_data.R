@@ -1,6 +1,6 @@
 #### Preamble ####
 # Purpose: Simulate and save a dataset of Canadian grocery store products, including vendor,
-#          product details, and pricing information for analysis and testing.
+#          product details, and pricing information for analysis.
 # Author: Duanyi Su
 # Date: 3 December 2024
 # Contact: duanyi.su@mail.utoronto.ca
