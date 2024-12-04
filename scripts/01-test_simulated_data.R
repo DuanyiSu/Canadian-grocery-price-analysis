@@ -1,4 +1,3 @@
-```r
 #### Preamble ####
 # Purpose: To validate the structure and consistency of the simulated Canadian grocery dataset,
 #          ensuring accurate data loading, logical constraints, and adherence to expected values.
@@ -109,4 +108,3 @@ if (n_distinct(simulate_data$brand) >= 2) {
 } else {
   stop("Test Failed: The 'brand' column contains less than two unique brands.")
 }
-```
