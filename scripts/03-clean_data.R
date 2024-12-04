@@ -1,4 +1,3 @@
-```r
 #### Preamble ####
 # Purpose: To clean and process raw product and transaction data by merging datasets, filtering, transforming, and saving the cleaned data into parquet files for further analysis.
 # Author: Duanyi Su
@@ -68,4 +67,3 @@ cleaned_data <- merge_data %>%
 write_parquet(merge_data, here("data", "02-analysis_data", "merged_data.parquet"))
 write_parquet(ppu_data, here("data", "02-analysis_data", "ppu_data.parquet"))
 write_parquet(cleaned_data, here("data", "02-analysis_data", "beef_data.parquet"))
-```
